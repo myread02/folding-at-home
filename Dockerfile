@@ -9,15 +9,15 @@
 FROM fedora
 
 # If you set USERNAME to Anonymous, the folding@home client pauses for 5 minutes, but will then begin processing data.
-ENV USERNAME Anonymous
-ENV TEAM 0
+ENV USERNAME myread02
+ENV TEAM 31403
 ENV POWER medium
 
 # Install updates
 RUN yum update -y
 
-# Install Folding@home
-RUN rpm -i https://fah.stanford.edu/file-releases/public/release/fahclient/centos-5.3-64bit/v7.3/fahclient-7.3.6-1.x86_64.rpm
+# Install Folding@home, updated
+RUN rpm -i https://download.foldingathome.org/releases/public/release/fahclient/centos-5.3-64bit/v7.4/fahclient-7.4.4-1.x86_64.rpm
 ADD config.xml /etc/fahclient/
 RUN chown fahclient:root /etc/fahclient/config.xml
 RUN sed -i -e "s/{{USERNAME}}/$USERNAME/;s/{{TEAM}}/$TEAM/;s/{{POWER}}/$POWER/" /etc/fahclient/config.xml
